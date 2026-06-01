@@ -1,5 +1,5 @@
 import {DeliveryProvider, DeliveryProviderFactory, DeliveryProviderType} from "../../domain";
-import {type HttpProvider} from "../interfaces";
+import {type HttpProvider} from "../../application";
 import {Inject, Injectable} from "@nestjs/common";
 import {MockCdekProvider} from "./mock-cdek.provider";
 import {MockBoxberryProvider} from "./mock-boxberry.provider";

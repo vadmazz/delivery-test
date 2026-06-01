@@ -2,7 +2,7 @@ import {Inject, Injectable} from "@nestjs/common";
 import {Address, Cart, DeliveryOption, type DeliveryProviderFactory, DeliveryProviderType} from "../../domain";
 
 @Injectable()
-export class DeliveryService {
+export class DeliveryOptionsService {
     private readonly _availableDeliveryProviders: Set<DeliveryProviderType> = new Set(
         [DeliveryProviderType.Boxberry, DeliveryProviderType.Cdek]
     );

@@ -1,5 +1,5 @@
 import {Address, Cart, DeliveryProvider, DeliveryProviderType, DeliveryOption} from "../../domain";
-import {HttpProvider} from "../interfaces";
+import {HttpProvider} from "../../application";
 
 export class MockCdekProvider implements DeliveryProvider {
     constructor(private readonly httpProvider: HttpProvider) {// from DI

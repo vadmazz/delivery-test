@@ -1,1 +1,1 @@
-export * from './delivery-service'
+export * from './delivery-options-service'

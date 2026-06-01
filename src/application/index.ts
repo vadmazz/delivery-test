@@ -1,3 +1,2 @@
 export * from './services';
-export * from './interfaces';
-export * from './providers';
+export * from './ports';
