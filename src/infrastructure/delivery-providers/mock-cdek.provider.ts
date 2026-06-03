@@ -1,26 +1,22 @@
 import {Address, Cart, DeliveryProvider, DeliveryProviderType, DeliveryOption} from "../../domain";
-import {HttpProvider} from "../../application";
 
 export class MockCdekProvider implements DeliveryProvider {
-    constructor(private readonly httpProvider: HttpProvider) {// from DI
-    }
+    private readonly pricePerKilogram = 100;
 
-    public async retrieveOptions(cart: Cart, address: Address): Promise<DeliveryOption[]> {
-        const response = await this.httpProvider.get("cdek.ru");
+    public async retrieveOptions(cart: Cart, _: Address): Promise<DeliveryOption[]> {
+        const totalPrice = cart.weight * this.pricePerKilogram;
 
-        return response.map(r => {
+        return [
             new DeliveryOption({
-                updatedAt: r.updatedAt,
-                id: r.id,
-                createdAt: r.createdAt,
-                providerType: r.providerType,
-                totalPrice: r.totalPrice,
-                deliveryAt: r.deliveryAt,
+                totalPrice: totalPrice,
+                providerType: this.type,
+                id: 'some-guid',
+                deliveryAt: new Date(),
             })
-        })
+        ];
     }
 
     get type(): DeliveryProviderType {
-        return DeliveryProviderType.Boxberry
+        return DeliveryProviderType.Cdek
     }
 }

@@ -1,23 +1,27 @@
-import {Address, Cart, DeliveryProvider, DeliveryProviderType, DeliveryOption} from "../../domain";
-import {HttpProvider} from "../../application";
+import {Address, Cart, DeliveryProvider, DeliveryProviderType, DeliveryOption, City} from "../../domain";
+
 
 export class MockBoxberryProvider implements DeliveryProvider {
-    constructor(private readonly httpProvider: HttpProvider) {// from DI
-    }
+    private readonly cityTariffs: Map<City, number> = new Map<City, number>([
+        ['Moscow', 300],
+        ['Kazan', 500],
+    ]);
 
-    public async retrieveOptions(cart: Cart, address: Address): Promise<DeliveryOption[]> {
-        const response = await this.httpProvider.get<unknown>("boxberry.ru");
+    public async retrieveOptions(_: Cart, address: Address): Promise<DeliveryOption[]> {
+        const tariff = this.cityTariffs.get(address.city);
 
-        return response.map(r => {
+        if (tariff === undefined) {
+            throw new Error(`Unknown city: ${address.city}`);
+        }
+
+        return [
             new DeliveryOption({
-                updatedAt: r.updatedAt,
-                id: r.id,
-                createdAt: r.createdAt,
-                providerType: r.providerType,
-                totalPrice: r.totalPrice,
-                deliveryAt: r.deliveryAt,
+                id: 'some-id',
+                providerType: this.type,
+                deliveryAt: new Date(),
+                totalPrice: tariff
             })
-        })
+        ]
     }
 
     get type(): DeliveryProviderType {

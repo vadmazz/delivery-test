@@ -1,22 +1,17 @@
+export type City = 'Moscow' | 'Kazan';
+
 export interface AddressProps {
-    x: number;
-    y: number;
+    city: City;
 }
 
 export class Address {
-    private readonly _x: number;
-    private readonly _y: number;
+    private readonly _city: City;
 
     constructor(props: AddressProps) {
-        this._x = props.x;
-        this._y = props.y;
+        this._city = props.city;
     }
 
-    get x(): number {
-        return this._x;
-    }
-
-    get y(): number {
-        return this._y;
+    get city(): City {
+        return this._city;
     }
 }
