@@ -1,6 +1,5 @@
 import {Address, Cart, DeliveryProvider, DeliveryProviderType, DeliveryOption, City} from "../../domain";
 
-
 export class MockBoxberryProvider implements DeliveryProvider {
     private readonly cityTariffs: Map<City, number> = new Map<City, number>([
         ['Moscow', 300],
