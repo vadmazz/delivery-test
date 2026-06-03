@@ -1,5 +1,5 @@
 import {Inject, Injectable} from "@nestjs/common";
-import {Address, Cart, DeliveryOption, type DeliveryProviderFactory, DeliveryProviderType} from "../../domain";
+import {Address, Cart, DeliveryOption, DeliveryProviderFactory, DeliveryProviderType} from "../../domain";
 
 @Injectable()
 export class DeliveryOptionsService {
@@ -8,7 +8,7 @@ export class DeliveryOptionsService {
     );
 
     constructor(
-        @Inject() private readonly deliveryProviderFactory: DeliveryProviderFactory,
+        @Inject(DeliveryProviderFactory) private readonly deliveryProviderFactory: DeliveryProviderFactory,
     ) {
     }
 

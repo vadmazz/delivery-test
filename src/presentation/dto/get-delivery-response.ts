@@ -1,4 +1,4 @@
-import {DeliveryOptionDto} from "./DeliveryOption.dto";
+import {DeliveryOptionDto} from "./delivery-option.dto";
 
 export class GetDeliveryResponse {
  options: DeliveryOptionDto[];
