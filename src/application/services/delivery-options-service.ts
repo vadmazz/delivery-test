@@ -13,18 +13,16 @@ export class DeliveryOptionsService {
     }
 
     public async getDeliveryOptions(cart: Cart, address: Address): Promise<DeliveryOption[]> {
-        let response: DeliveryOption[] = [];
+        const results = await Promise.allSettled(
+            Array.from(this._availableDeliveryProviders, providerType => {
+                const provider = this.deliveryProviderFactory.create(providerType);
 
-        for (let availableDeliveryProvider of this._availableDeliveryProviders) {
-            const provider = this.deliveryProviderFactory.create(availableDeliveryProvider);
-            try {// Graceful degradation тут
-                const options = await provider.retrieveOptions(cart, address);
-                response = response.concat(options);
-            } catch (error) {
-                console.log(error);
-            }
-        }
+                return provider.retrieveOptions(cart, address);
+            })
+        );
 
-        return response;
+        return results
+            .filter(result => result.status === 'fulfilled')
+            .flatMap(result => result.value);
     }
 }
